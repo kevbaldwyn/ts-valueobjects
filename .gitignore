@@ -1,0 +1,12 @@
+# Generated directories:
+.nyc_output/
+coverage/
+reports/
+dist/
+node_modules/
+
+# Project files:
+*.sublime-*
+
+# stryker temp files
+.stryker-tmp
