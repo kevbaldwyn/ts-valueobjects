@@ -5,10 +5,9 @@ node_js:
   - "13"
 install:
   - npm install
-build:
-  - npm run prepare
 script:
   - npm run test
+before_script: npm run lint
 env:
   global:
     secure: Srk+c+Tjw5gxztw0lqw9tDurAFCUzFJiPrZrathXtDBsL8/PsT3pN6WAbsAaqws3lafUXAXYq4NwGKaXTlsY/IG7RmaV+k6IB7hy+bc31BfmqD6UlVqnc88lTMIMxGeZoDEykdGPeDqnotX6twdEN//5Q/mu+nZHM029Li66gM0Qt4ebmoMeO6sOa1ebDwWcQwValzkdJvfMrX2LIJIVL2kAJ81tz44vQb2cX5GorTIjjeFuCHdefa+R6djQNqgSMApsi7I6w9wttOCj4LSy0lkATZmtPYahHx+YKbqJHa2pqV5tKbav4E0Kffk7ZTNsnPOWjDPlwrG4PV4p1cHvXhW0ZMJjJv1/ZGrQcUiAODIbsh3CSy6gNkqTQ1HtCDcW7lw53owfRP/uSZfEmA5qMCM0C6J8Lc3JCGHpEKWGnN4ckzvckoq6HIs2UGYFzSyQVFkAc8MPKO4sz/HAYOzlHvuJw6D433JI+xOasS/9nEnazIpyQKk206tQqXJSdtWh+9JDPxM6OZweJvLD3k5BTaek5iv1T3zzKO6xKgXsrKQ2EO/E5mkexfL0KJQo6g+aJY48gjNvm1lar4OoggOC1Cw4z1UbKgBQ2W+qi75IEs9/ErO1zgWaXyMYHa5SNteoB5TaEJ77BwJN/+c+Rs3cpWCDDEIKS/2HlmvdQrnWzno=
