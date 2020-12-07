@@ -7,6 +7,7 @@ import {
 
 export const FloatScalar: ValueObjectStatic<number> = class FloatScalar {
   type: string;
+
   value: number;
 
   constructor(value: number) {
@@ -16,7 +17,7 @@ export const FloatScalar: ValueObjectStatic<number> = class FloatScalar {
     enforceExtension(this, FloatScalar);
   }
 
-  public static fromNative(value: number) {
+  public static fromNative(value: number): ValueObject<number> {
     return new this(value);
   }
 

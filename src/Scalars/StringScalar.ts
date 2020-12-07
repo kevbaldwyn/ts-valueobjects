@@ -7,6 +7,7 @@ import {
 
 export const StringScalar: ValueObjectStatic<string> = class StringScalar {
   type: string;
+
   value: string;
 
   constructor(value: string) {
@@ -16,7 +17,7 @@ export const StringScalar: ValueObjectStatic<string> = class StringScalar {
     enforceExtension(this, StringScalar);
   }
 
-  public static fromNative(value: string) {
+  public static fromNative(value: string): ValueObject<string> {
     return new this(value);
   }
 
