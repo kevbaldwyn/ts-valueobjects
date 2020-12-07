@@ -6,7 +6,7 @@ node_js:
 install:
   - npm install
 script:
-  - npm run test
+  - npm run test:mutations
 before_script: npm run lint
 env:
   global:
