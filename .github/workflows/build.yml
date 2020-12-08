@@ -22,3 +22,7 @@ jobs:
       - run: npm run test:mutations
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.COVERALLS_TOKEN }}

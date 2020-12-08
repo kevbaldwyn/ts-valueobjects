@@ -1,19 +1,19 @@
 {
-  "name": "typescript-template",
-  "version": "1.0.4",
-  "description": "A complete Node.js project template using TypeScript and following general best practices.",
+  "name": "ts-valueobjects",
+  "version": "0.1.0",
+  "description": "Typescript typesafe Value Objects made easy",
   "keywords": [
     "typescript",
-    "template"
+    "value objects"
   ],
   "author": {
-    "name": "Chris Wells",
-    "url": "https://chriswells.io"
+    "name": "Kevin Baldwyn",
+    "url": "https://github.com/kevbaldwyn"
   },
   "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chriswells0/node-typescript-template.git"
+    "url": "https://github.com/kevbaldwyn/ts-valueobjects.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -66,11 +66,6 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
   },
   "dependencies": {}
