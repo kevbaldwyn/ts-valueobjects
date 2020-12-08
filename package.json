@@ -21,7 +21,8 @@
     "dist/"
   ],
   "scripts": {
-    "build": "npm run clean && npm run lint && tsc",
+    "build": "npm run lint && tsc",
+    "build:clean": "npm run clean && npm run lint && tsc",
     "cm": "cz",
     "changelog": "conventional-changelog -p angular -u",
     "changelog:update": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
