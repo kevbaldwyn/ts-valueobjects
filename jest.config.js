@@ -8,5 +8,6 @@ module.exports = {
       functions: 80,
       lines: 80
     }
-  }
+  },
+  testPathIgnorePatterns: ["/node_modules/", "*.d.ts"]
 };
