@@ -9,5 +9,5 @@ module.exports = {
       lines: 80
     }
   },
-  testPathIgnorePatterns: ["/node_modules/", "*.d.ts"]
+  testPathIgnorePatterns: ["/node_modules/", "/*.d.ts/"]
 };
