@@ -1,23 +1,16 @@
-import {
-  ValueObject,
-  ValueObjectStatic,
-  getValueObjectType,
-  enforceExtension
-} from "../ValueObject";
+import { ValueObject, getType } from "../ValueObject";
 
-export const StringScalar: ValueObjectStatic<string> = class StringScalar {
+export class StringScalar implements ValueObject<string> {
   type: string;
 
   value: string;
 
   constructor(value: string) {
     this.value = value;
-    this.type = getValueObjectType(this);
-
-    enforceExtension(this, StringScalar);
+    this.type = getType(this, StringScalar, true);
   }
 
-  public static fromNative(value: string): ValueObject<string> {
+  public static fromNative(value: string): StringScalar {
     return new this(value);
   }
 
@@ -28,4 +21,4 @@ export const StringScalar: ValueObjectStatic<string> = class StringScalar {
   public toNative = (): string => {
     return this.value;
   };
-};
+}

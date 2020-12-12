@@ -1,20 +1,13 @@
-import {
-  ValueObject,
-  ValueObjectStatic,
-  getValueObjectType,
-  enforceExtension
-} from "../ValueObject";
+import { ValueObject, getType } from "../ValueObject";
 
-export const FloatScalar: ValueObjectStatic<number> = class FloatScalar {
+export class FloatScalar implements ValueObject<number> {
   type: string;
 
   value: number;
 
   constructor(value: number) {
     this.value = value;
-    this.type = getValueObjectType(this);
-
-    enforceExtension(this, FloatScalar);
+    this.type = getType(this, FloatScalar, true);
   }
 
   public static fromNative(value: number): ValueObject<number> {
@@ -28,4 +21,4 @@ export const FloatScalar: ValueObjectStatic<number> = class FloatScalar {
   public toNative = (): number => {
     return this.value;
   };
-};
+}
