@@ -42,9 +42,18 @@ describe("Test BooleanScalar", () => {
     expect(t.isTrue()).toBeTruthy();
   });
 
-  //   test("isTrue() returns false when false", () => {});
+  test("isTrue() returns false when false", () => {
+    const t = new TestBoolean1(false);
+    expect(t.isTrue()).not.toBeTruthy();
+  });
 
-  //   test("isFalse() returns true when false", () => {});
+  test("isFalse() returns true when false", () => {
+    const t = new TestBoolean1(false);
+    expect(t.isFalse()).toBeTruthy();
+  });
 
-  //   test("isFalse() returns false when true", () => {});
+  test("isFalse() returns false when true", () => {
+    const t = new TestBoolean1(true);
+    expect(t.isFalse()).not.toBeTruthy();
+  });
 });

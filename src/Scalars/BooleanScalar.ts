@@ -14,10 +14,6 @@ export class BooleanScalar implements ValueObject<boolean> {
     return new this(value);
   }
 
-  public static boo(): boolean {
-    return true;
-  }
-
   public isSame = (object: ValueObject<boolean>): boolean => {
     return this.type === object.type && this.value === object.value;
   };
