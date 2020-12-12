@@ -1,3 +1,4 @@
+import { getType } from "../../ValueObject";
 import { StringScalar } from "../StringScalar";
 
 describe("Test StringScalar", () => {
@@ -15,27 +16,20 @@ describe("Test StringScalar", () => {
 
   test("fromNative() initialises object with correct type", () => {
     const obj = TESTString1.fromNative(testString);
-    expect(obj.type).toBe("TESTString1");
+    expect(getType(obj)).toBe("TESTString1");
   });
 
   test(`toNative() returns "${testString}"`, () => {
     expect(testStringClass.toNative()).toBe(testString);
   });
 
-  test("isSame() returns true when values and type match", () => {
+  test("isSame() returns true when values match", () => {
     expect(testStringClass.isSame(new TESTString1(testString))).toBeTruthy();
   });
 
-  test("isSame() returns false when values mismatch and type match", () => {
+  test("isSame() returns false when values don't match", () => {
     expect(
       testStringClass.isSame(new TESTString1("Not the same"))
-    ).not.toBeTruthy();
-  });
-
-  test("isSame() returns false when values match and type mismatch", () => {
-    class TestStringClass2 extends StringScalar {}
-    expect(
-      testStringClass.isSame(new TestStringClass2(testString))
     ).not.toBeTruthy();
   });
 });

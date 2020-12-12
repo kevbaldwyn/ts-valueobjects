@@ -1,12 +1,44 @@
 import { ValueObject, getType } from "../ValueObject";
 
-class BaseStub implements ValueObject<string> {
-  type = "TYPE";
-
-  value: string;
-
+class Stub extends ValueObject<string> {
   constructor(value: string) {
-    this.value = value;
+    super(value, Stub, false);
+  }
+
+  isSame = (): boolean => {
+    return false;
+  };
+
+  toNative = (): string => {
+    return this.value;
+  };
+
+  public static fromNative(value: string): Stub {
+    return new this(value);
+  }
+}
+
+class StubRequiresExtension extends ValueObject<string> {
+  constructor(value: string) {
+    super(value, StubRequiresExtension, true);
+  }
+
+  isSame = (): boolean => {
+    return false;
+  };
+
+  toNative = (): string => {
+    return this.value;
+  };
+
+  public static fromNative(value: string): StubRequiresExtension {
+    return new this(value);
+  }
+}
+
+class StubRequiresMissingFromNative extends ValueObject<string> {
+  constructor(value: string) {
+    super(value, StubRequiresMissingFromNative, false);
   }
 
   isSame = (): boolean => {
@@ -18,28 +50,24 @@ class BaseStub implements ValueObject<string> {
   };
 }
 
-class Stub extends BaseStub {
-  public static fromNative(value: string): Stub {
-    return new this(value);
-  }
-}
-
-describe("Test getType()", () => {
+describe("Test ValueObject abstract class()", () => {
   test("should return 'Stub' for stubbed class", () => {
-    expect(getType(new Stub("jh"), Stub)).toBe("Stub");
+    expect(getType(new Stub("jh"))).toBe("Stub");
   });
 
   test("should throw excpetion for 'Stub' class that requires extension", () => {
     expect(() => {
-      getType(new Stub("jh"), Stub, true);
+      getType(new StubRequiresExtension("jh"));
     }).toThrow(
-      "Stub cannot be instantiated, you should create your own domain value objects that extend it"
+      "StubRequiresExtension cannot be instantiated, you should create your own domain value objects that extend it"
     );
   });
 
-  test("should throw exception for 'BaseStub' class that doesn't include fromNative() method", () => {
+  test("should throw exception for 'StubRequiresMissingFromNative' class that doesn't include fromNative() method", () => {
     expect(() => {
-      getType(new BaseStub("jh"), BaseStub);
-    }).toThrow("BaseStub must include a fromNative method");
+      getType(new StubRequiresMissingFromNative("jh"));
+    }).toThrow(
+      "StubRequiresMissingFromNative must include a fromNative method"
+    );
   });
 });

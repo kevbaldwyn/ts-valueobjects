@@ -1,13 +1,8 @@
-import { ValueObject, getType } from "../ValueObject";
+import { ValueObject } from "../ValueObject";
 
-export class StringScalar implements ValueObject<string> {
-  type: string;
-
-  value: string;
-
+export class StringScalar extends ValueObject<string> {
   constructor(value: string) {
-    this.value = value;
-    this.type = getType(this, StringScalar, true);
+    super(value, StringScalar, true);
   }
 
   public static fromNative(value: string): StringScalar {
@@ -15,7 +10,7 @@ export class StringScalar implements ValueObject<string> {
   }
 
   public isSame = (object: ValueObject<string>): boolean => {
-    return this.type === object.type && this.value === object.value;
+    return this.value === object.value;
   };
 
   public toNative = (): string => {

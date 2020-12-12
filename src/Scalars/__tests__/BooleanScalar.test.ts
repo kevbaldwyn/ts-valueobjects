@@ -1,3 +1,4 @@
+import { getType } from "../../ValueObject";
 import { BooleanScalar } from "../BooleanScalar";
 
 describe("Test BooleanScalar", () => {
@@ -15,18 +16,18 @@ describe("Test BooleanScalar", () => {
 
   test("fromNative() initialises object with correct type", () => {
     const obj = TestBoolean1.fromNative(testBoolean);
-    expect(obj.type).toBe("TestBoolean1");
+    expect(getType(obj)).toBe("TestBoolean1");
   });
 
   test("true() initialises object with correct type", () => {
     const obj = TestBoolean1.true();
-    expect(obj.type).toBe("TestBoolean1");
+    expect(getType(obj)).toBe("TestBoolean1");
     expect(obj.value).toBeTruthy();
   });
 
   test("false() initialises object with correct type", () => {
     const obj = TestBoolean1.false();
-    expect(obj.type).toBe("TestBoolean1");
+    expect(getType(obj)).toBe("TestBoolean1");
     expect(obj.value).not.toBeTruthy();
   });
 
@@ -34,19 +35,12 @@ describe("Test BooleanScalar", () => {
     expect(testBooleanClass.toNative()).toBe(testBoolean);
   });
 
-  test("isSame() returns true when values and type match", () => {
+  test("isSame() returns true when match", () => {
     expect(testBooleanClass.isSame(new TestBoolean1(testBoolean))).toBeTruthy();
   });
 
-  test("isSame() returns false when values mismatch and type match", () => {
+  test("isSame() returns false when values don't match", () => {
     expect(testBooleanClass.isSame(new TestBoolean1(false))).not.toBeTruthy();
-  });
-
-  test("isSame() returns false when values match and type mismatch", () => {
-    class TestBooleanClass2 extends BooleanScalar {}
-    expect(
-      testBooleanClass.isSame(new TestBooleanClass2(testBoolean))
-    ).not.toBeTruthy();
   });
 
   test("isTrue() returns true when true", () => {

@@ -1,3 +1,4 @@
+import { getType } from "../../ValueObject";
 import { FloatScalar } from "../FloatScalar";
 
 describe("Test FloatScalar", () => {
@@ -16,27 +17,20 @@ describe("Test FloatScalar", () => {
 
   test("fromNative() initialises object with correct type", () => {
     const obj = TESTFloat1.fromNative(testFloat);
-    expect(obj.type).toBe("TESTFloat1");
+    expect(getType(obj)).toBe("TESTFloat1");
   });
 
   test(`toNative() returns "${testFloat}"`, () => {
     expect(testStringClass.toNative()).toBe(testFloat);
   });
 
-  test("isSame() returns true when values and type match", () => {
+  test("isSame() returns true when values match", () => {
     expect(testStringClass.isSame(new TESTFloat1(testFloat))).toBeTruthy();
   });
 
-  test("isSame() returns false when values mismatch and type match", () => {
+  test("isSame() returns false when values don't match", () => {
     expect(
       testStringClass.isSame(new TESTFloat1(differentFloat))
-    ).not.toBeTruthy();
-  });
-
-  test("isSame() returns false when values match and type mismatch", () => {
-    class TestFloatClass2 extends FloatScalar {}
-    expect(
-      testStringClass.isSame(new TestFloatClass2(testFloat))
     ).not.toBeTruthy();
   });
 });

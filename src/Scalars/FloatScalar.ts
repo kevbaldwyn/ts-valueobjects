@@ -1,21 +1,16 @@
-import { ValueObject, getType } from "../ValueObject";
+import { ValueObject } from "../ValueObject";
 
-export class FloatScalar implements ValueObject<number> {
-  type: string;
-
-  value: number;
-
+export class FloatScalar extends ValueObject<number> {
   constructor(value: number) {
-    this.value = value;
-    this.type = getType(this, FloatScalar, true);
+    super(value, FloatScalar, true);
   }
 
-  public static fromNative(value: number): ValueObject<number> {
+  public static fromNative(value: number): FloatScalar {
     return new this(value);
   }
 
   public isSame = (object: ValueObject<number>): boolean => {
-    return this.type === object.type && this.value === object.value;
+    return this.value === object.value;
   };
 
   public toNative = (): number => {

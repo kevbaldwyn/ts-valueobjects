@@ -1,13 +1,8 @@
-import { ValueObject, getType } from "../ValueObject";
+import { ValueObject } from "../ValueObject";
 
-export class BooleanScalar implements ValueObject<boolean> {
-  type: string;
-
-  value: boolean;
-
+export class BooleanScalar extends ValueObject<boolean> {
   constructor(value: boolean) {
-    this.value = value;
-    this.type = getType(this, BooleanScalar, true);
+    super(value, BooleanScalar, true);
   }
 
   public static fromNative(value: boolean): BooleanScalar {
@@ -23,7 +18,7 @@ export class BooleanScalar implements ValueObject<boolean> {
   }
 
   public isSame = (object: ValueObject<boolean>): boolean => {
-    return this.type === object.type && this.value === object.value;
+    return this.value === object.value;
   };
 
   public toNative = (): boolean => {

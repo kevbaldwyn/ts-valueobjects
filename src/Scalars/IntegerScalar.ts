@@ -1,16 +1,8 @@
-import { ValueObject, getType } from "../ValueObject";
+import { ValueObject } from "../ValueObject";
 
-// npm install big-integer // type?
-//
-
-export class IntegerScalar implements ValueObject<BigInt> {
-  type: string;
-
-  value: BigInt;
-
+export class IntegerScalar extends ValueObject<BigInt> {
   constructor(value: BigInt) {
-    this.value = value;
-    this.type = getType(this, IntegerScalar, true);
+    super(value, IntegerScalar, true);
   }
 
   public static fromNative(value: BigInt): ValueObject<BigInt> {
@@ -18,7 +10,7 @@ export class IntegerScalar implements ValueObject<BigInt> {
   }
 
   public isSame = (object: ValueObject<BigInt>): boolean => {
-    return this.type === object.type && this.value === object.value;
+    return this.value === object.value;
   };
 
   public toNative = (): BigInt => {
