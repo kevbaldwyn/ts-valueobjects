@@ -18,6 +18,18 @@ describe("Test BooleanScalar", () => {
     expect(obj.type).toBe("TestBoolean1");
   });
 
+  test("true() initialises object with correct type", () => {
+    const obj = TestBoolean1.true();
+    expect(obj.type).toBe("TestBoolean1");
+    expect(obj.value).toBeTruthy();
+  });
+
+  test("false() initialises object with correct type", () => {
+    const obj = TestBoolean1.false();
+    expect(obj.type).toBe("TestBoolean1");
+    expect(obj.value).not.toBeTruthy();
+  });
+
   test(`toNative() returns "${testBoolean}"`, () => {
     expect(testBooleanClass.toNative()).toBe(testBoolean);
   });
