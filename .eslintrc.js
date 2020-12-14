@@ -22,6 +22,12 @@ module.exports = {
   ],
   rules: {
     "max-classes-per-file": ["error", 3],
+    "@typescript-eslint/lines-between-class-members": [
+      "error",
+      {
+        exceptAfterSingleLine: false
+      }
+    ],
     "import/prefer-default-export": "off",
     "no-use-before-define": [
       "error",
