@@ -2,7 +2,7 @@ import { ValueObject } from "../ValueObject";
 
 export class BooleanScalar extends ValueObject<boolean> {
   constructor(value: boolean) {
-    super(value, BooleanScalar, true);
+    super(value, BooleanScalar);
   }
 
   public static fromNative(value: boolean): BooleanScalar {

@@ -1,8 +1,6 @@
 import { getType } from "../ValueObject";
 import { EnumValueObject, Enumerate } from "../EnumValueObject";
 
-class TESTEnum1 extends EnumValueObject {}
-
 describe("Test EnumValueObject", () => {
   const testFloat = 20.3;
   const testString = "20.3";
@@ -10,23 +8,15 @@ describe("Test EnumValueObject", () => {
   const differentFloat = 34.5;
   const differentString = "34.5";
 
-  const testStringClass = new TESTEnum1(testString);
-  const testFloatClass = new TESTEnum1(testFloat);
-
-  test("must be extended (not instantiated)", () => {
-    expect(() => {
-      return new EnumValueObject(testFloat);
-    }).toThrow(
-      "EnumValueObject cannot be instantiated, you should create your own domain value objects that extend it"
-    );
-  });
+  const testStringClass = new EnumValueObject(testString);
+  const testFloatClass = new EnumValueObject(testFloat);
 
   test("fromNative() initialises object with correct type", () => {
-    const obj1 = TESTEnum1.fromNative(testFloat);
-    expect(getType(obj1)).toBe("TESTEnum1");
+    const obj1 = EnumValueObject.fromNative(testFloat);
+    expect(getType(obj1)).toBe("EnumValueObject");
 
-    const obj2 = TESTEnum1.fromNative(testString);
-    expect(getType(obj2)).toBe("TESTEnum1");
+    const obj2 = EnumValueObject.fromNative(testString);
+    expect(getType(obj2)).toBe("EnumValueObject");
   });
 
   test("toNative() returns expected values", () => {
@@ -35,16 +25,18 @@ describe("Test EnumValueObject", () => {
   });
 
   test("isSame() returns true when values match", () => {
-    expect(testFloatClass.isSame(new TESTEnum1(testFloat))).toBeTruthy();
-    expect(testStringClass.isSame(new TESTEnum1(testString))).toBeTruthy();
+    expect(testFloatClass.isSame(new EnumValueObject(testFloat))).toBeTruthy();
+    expect(
+      testStringClass.isSame(new EnumValueObject(testString))
+    ).toBeTruthy();
   });
 
   test("isSame() returns false when values don't match", () => {
     expect(
-      testFloatClass.isSame(new TESTEnum1(differentFloat))
+      testFloatClass.isSame(new EnumValueObject(differentFloat))
     ).not.toBeTruthy();
     expect(
-      testStringClass.isSame(new TESTEnum1(differentString))
+      testStringClass.isSame(new EnumValueObject(differentString))
     ).not.toBeTruthy();
   });
 });

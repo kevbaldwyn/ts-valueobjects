@@ -3,31 +3,23 @@ import { BooleanScalar } from "../BooleanScalar";
 
 describe("Test BooleanScalar", () => {
   const testBoolean = true;
-  class TestBoolean1 extends BooleanScalar {}
-  const testBooleanClass = new TestBoolean1(testBoolean);
-
-  test("must be extended (not instantiated)", () => {
-    expect(() => {
-      return new BooleanScalar(testBoolean);
-    }).toThrow(
-      "BooleanScalar cannot be instantiated, you should create your own domain value objects that extend it"
-    );
-  });
+  const testBooleanClass = new BooleanScalar(testBoolean);
 
   test("fromNative() initialises object with correct type", () => {
-    const obj = TestBoolean1.fromNative(testBoolean);
-    expect(getType(obj)).toBe("TestBoolean1");
+    const obj = BooleanScalar.fromNative(testBoolean);
+    expect(getType(obj)).toBe("BooleanScalar");
+    expect(obj.value).toBe(testBoolean);
   });
 
   test("true() initialises object with correct type", () => {
-    const obj = TestBoolean1.true();
-    expect(getType(obj)).toBe("TestBoolean1");
+    const obj = BooleanScalar.true();
+    expect(getType(obj)).toBe("BooleanScalar");
     expect(obj.value).toBeTruthy();
   });
 
   test("false() initialises object with correct type", () => {
-    const obj = TestBoolean1.false();
-    expect(getType(obj)).toBe("TestBoolean1");
+    const obj = BooleanScalar.false();
+    expect(getType(obj)).toBe("BooleanScalar");
     expect(obj.value).not.toBeTruthy();
   });
 
@@ -36,30 +28,32 @@ describe("Test BooleanScalar", () => {
   });
 
   test("isSame() returns true when match", () => {
-    expect(testBooleanClass.isSame(new TestBoolean1(testBoolean))).toBeTruthy();
+    expect(
+      testBooleanClass.isSame(new BooleanScalar(testBoolean))
+    ).toBeTruthy();
   });
 
   test("isSame() returns false when values don't match", () => {
-    expect(testBooleanClass.isSame(new TestBoolean1(false))).not.toBeTruthy();
+    expect(testBooleanClass.isSame(new BooleanScalar(false))).not.toBeTruthy();
   });
 
   test("isTrue() returns true when true", () => {
-    const t = new TestBoolean1(true);
+    const t = new BooleanScalar(true);
     expect(t.isTrue()).toBeTruthy();
   });
 
   test("isTrue() returns false when false", () => {
-    const t = new TestBoolean1(false);
+    const t = new BooleanScalar(false);
     expect(t.isTrue()).not.toBeTruthy();
   });
 
   test("isFalse() returns true when false", () => {
-    const t = new TestBoolean1(false);
+    const t = new BooleanScalar(false);
     expect(t.isFalse()).toBeTruthy();
   });
 
   test("isFalse() returns false when true", () => {
-    const t = new TestBoolean1(true);
+    const t = new BooleanScalar(true);
     expect(t.isFalse()).not.toBeTruthy();
   });
 });

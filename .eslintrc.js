@@ -6,10 +6,10 @@ module.exports = {
     "eslint-comments",
     "jest",
     "promise",
-    "unicorn"
+    "unicorn",
   ],
   parserOptions: {
-    project: "./tsconfig.json"
+    project: "./tsconfig.json",
   },
   extends: [
     "airbnb-typescript/base",
@@ -18,28 +18,28 @@ module.exports = {
     "plugin:jest/recommended",
     "plugin:promise/recommended",
     "prettier",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
   ],
   rules: {
-    "max-classes-per-file": ["error", 3],
+    "max-classes-per-file": 0,
     "@typescript-eslint/lines-between-class-members": [
       "error",
       {
-        exceptAfterSingleLine: false
-      }
+        exceptAfterSingleLine: false,
+      },
     ],
     "import/prefer-default-export": "off",
     "no-use-before-define": [
       "error",
-      { functions: false, classes: true, variables: true }
+      { functions: false, classes: true, variables: true },
     ],
     "@typescript-eslint/explicit-function-return-type": [
       "error",
-      { allowExpressions: true, allowTypedFunctionExpressions: true }
+      { allowExpressions: true, allowTypedFunctionExpressions: true },
     ],
     "@typescript-eslint/no-use-before-define": [
       "error",
-      { functions: false, classes: true, variables: true, typedefs: true }
-    ]
-  }
+      { functions: false, classes: true, variables: true, typedefs: true },
+    ],
+  },
 };

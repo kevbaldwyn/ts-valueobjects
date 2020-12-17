@@ -1,4 +1,4 @@
-interface ValueObjectInterface<V>
+export interface ValueObjectInterface<V>
   extends Readonly<{
     value: V;
   }> {
@@ -6,19 +6,18 @@ interface ValueObjectInterface<V>
   toNative(): V;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ValueObjectConstructor<T = any> = new (...args: any[]) => T;
+
 export const getType = (obj: ValueObjectInterface<unknown>): string => {
   return obj.constructor.name;
 };
 
-const enforceExtension = (
-  v: ValueObjectInterface<unknown>,
-  s: unknown
-): void => {
-  if (typeof s === "function" && getType(v) === s.name) {
-    throw new Error(
-      `${s.name} cannot be instantiated, you should create your own domain value objects that extend it`
-    );
-  }
+export const hasMember = (
+  obj: ValueObjectInterface<unknown>,
+  property: string
+): boolean => {
+  return Object.keys(obj).filter((method) => method === property).length !== 0;
 };
 
 const enforceFromNative = <O>(
@@ -33,15 +32,32 @@ const enforceFromNative = <O>(
 export abstract class ValueObject<V> implements ValueObjectInterface<V> {
   readonly value: V;
 
-  constructor(value: V, type: unknown, mustBeExtended = false) {
+  constructor(value: V, type: unknown) {
     this.value = value;
     enforceFromNative(this, type);
-    if (mustBeExtended) {
-      enforceExtension(this, type);
-    }
   }
 
   abstract isSame(object: ValueObjectInterface<V>): boolean;
 
   abstract toNative(): V;
+}
+
+export function DomainObjectFrom<TBase extends ValueObjectConstructor, V>(
+  Base: TBase
+): TBase {
+  return class extends Base {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    constructor(...args: any[]) {
+      super(...args);
+      // make the compiler play nice
+      const o = (this as unknown) as ValueObjectInterface<V>;
+      const typeName = getType(o);
+
+      if (!hasMember(o, typeName)) {
+        throw new Error(
+          `${typeName} cannot be instantiated, you should create your own domain value objects that extend it by adding a readonly property "readonly ${typeName} = true;"`
+        );
+      }
+    }
+  };
 }

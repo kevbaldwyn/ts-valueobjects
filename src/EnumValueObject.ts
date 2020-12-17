@@ -1,10 +1,10 @@
-import { ValueObject } from "./ValueObject";
+import { ValueObject, ValueObjectConstructor } from "./ValueObject";
 
 type EnumValue = string | number;
 
 export class EnumValueObject extends ValueObject<EnumValue> {
   constructor(value: EnumValue) {
-    super(value, EnumValueObject, true);
+    super(value, EnumValueObject);
   }
 
   public static fromNative(value: EnumValue): EnumValueObject {
@@ -20,10 +20,9 @@ export class EnumValueObject extends ValueObject<EnumValue> {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Constructor<T = any> = new (...args: any[]) => T;
-
-export function Enumerate<TBase extends Constructor>(Base: TBase): TBase {
+export function Enumerate<TBase extends ValueObjectConstructor>(
+  Base: TBase
+): TBase {
   return class extends Base {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any[]) {
