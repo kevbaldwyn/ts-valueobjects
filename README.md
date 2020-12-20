@@ -21,6 +21,8 @@ This package is heavily inspiried by [funeralzone/valueobjects](https://github.c
 The core of the library is the `ValueObjectInterface`, it enforces immutability by making the underlying value readonly and provides an interface for deserialising (`toNative()`) and comparing (`isSame()`) value objects. It requires a generic type that the vlaue being stored will be:
 
 ```typescript
+import { ValueObjectInterface } from "ts-valueobjects";
+
 const anEmailAddress: ValueObjectInterface<string> = {
   value: 'email@example.com',
   isSame(object: ValueObjectInterface<string>): boolean {
@@ -55,7 +57,7 @@ const someCoordinate: ValueObjectInterface<{x:number, y:number}> = {
 Creating lots of value objects this way can get verbose so you can use some of the included classes for creating common scalar types (`StringScalar`, `FloatScalar`, `IntegerScalar`, `BooleanScalar`, `NullScalar`), and other more complex types such as `EnumValueObject`. 
 
 ```typescript
-import { StringScalar } from "StringScalar";
+import { StringScalar } from "ts-valueobjects";
 
 // creating the above email example is much easier:
 const anEmailAddress = new StringScalar('email@example.com');
@@ -69,12 +71,28 @@ const anotherEmailAddress = StringScalar.fromNative('another-email@example.com')
 console.log(anEmailAddress.isSame(anotherEmailAddress)); // false
 ```
 
+## Enum Type Helper
+Using the helper for cretaing Enums will throw errors when trying to access properties that do not exist:
+```typescript
+import { Enumerate, EnumValueObject } from "ts-valueobjects";
+
+class Enumerated extends Enumerate(
+  class extends EnumValueObject {
+    static VAL1 = "One";
+    static VAL2 = "Two";
+  }
+) {}
+const value = new Enumerated(Enumerated.VAL3); // will throw an error
+const value = new Enumerated(Enumerated.VAL1); // ok
+// or
+const value = Enumerated.fromNative(Enumerated.VAL1); // ok
+```
+
 ## Domain Value Objects
 The above helpers can be combined with the `DomainObjectFrom()` mixin to allow you to easily create typesafe domain value objects that are more expressive of your domain language. For example:
 
 ```typescript
-import { StringScalar } from "StringScalar";
-import { DomainObjectFrom } from "ValueObject";
+import { StringScalar, DomainObjectFrom } from "ts-valueobjects";
 
 class EmailAddress extends DomainObjectFrom(
   // the class to extend the domain object from
