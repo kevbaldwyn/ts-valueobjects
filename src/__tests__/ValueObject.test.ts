@@ -109,4 +109,16 @@ describe("Test DomainObjectFrom() mixin", () => {
     // compiler should complain about this
     // testFunc(new DomainObject2(testString), new DomainObject1(testString));
   });
+
+  test("fromNative() should create object of correct type", () => {
+    class DomainObject extends DomainObjectFrom(
+      class extends Stub {
+        readonly DomainObject = true;
+      }
+    ) {}
+    const obj = DomainObject.fromNative("Some String");
+
+    expect(getType(obj)).toBe("DomainObject");
+    expect(obj.toNative()).toBe("Some String");
+  });
 });
