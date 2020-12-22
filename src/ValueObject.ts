@@ -1,9 +1,19 @@
+export type Native =
+  | string
+  | number
+  | BigInt
+  | null
+  | boolean
+  | Record<string, unknown>;
+
+export type GenericObject = Record<string, unknown>;
+
 export interface ValueObjectInterface<V>
   extends Readonly<{
     value: V;
   }> {
   isSame(object: ValueObjectInterface<V>): boolean;
-  toNative(): V;
+  toNative(): Native;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +49,7 @@ export abstract class ValueObject<V> implements ValueObjectInterface<V> {
 
   abstract isSame(object: ValueObjectInterface<V>): boolean;
 
-  abstract toNative(): V;
+  abstract toNative(): Native;
 }
 
 export function DomainObjectFrom<TBase extends ValueObjectConstructor, V>(

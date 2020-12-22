@@ -88,6 +88,43 @@ const value = new Enumerated(Enumerated.VAL1); // ok
 const value = Enumerated.fromNative(Enumerated.VAL1); // ok
 ```
 
+## Composite Value Objects
+The `CompositeValueObject` allows you to create value objects that are more complex and contain any number of other value objects (including nested `CompositeValueObject`s and Domain Objects). 
+
+```typescript
+class User extends CompositeValueObject<{
+  name: StringScalar;
+  email: StringScalar;
+  isRegistered: BooleanScalar;
+}> {
+  constructor(name: StringScalar, email: StrigScalar, isRegistered: BooleanScalar) {
+    super({
+      name,
+      email,
+      isRegistered
+    }, User);
+  }
+
+  public static fromNative(value: { name: string; email: string, isRegistered: boolean }): User {
+    return new this(
+      StringScalar.fromNative(value.name),
+      StringScalar.fromNative(value.email),
+      BooleanScalar.fromNative(value.isRegistered)
+    );
+  }
+
+  public getName = (): StringScalar => {
+    return this.value.name;
+  };
+
+  ...
+}
+
+// immutability of the properties is still enforced:
+const user = new User(...);
+user.value.name = StringValue.fromNative('new name'); // -> this will throw a TypeError
+```
+
 ## Domain Value Objects
 The above helpers can be combined with the `DomainObjectFrom()` mixin to allow you to easily create typesafe domain value objects that are more expressive of your domain language. For example:
 
