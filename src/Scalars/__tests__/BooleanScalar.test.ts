@@ -37,6 +37,10 @@ describe("Test BooleanScalar", () => {
     expect(testBooleanClass.isSame(new BooleanScalar(false))).not.toBeTruthy();
   });
 
+  test("isNull() returns false", () => {
+    expect(testBooleanClass.isNull()).not.toBeTruthy();
+  });
+
   test("isTrue() returns true when true", () => {
     const t = new BooleanScalar(true);
     expect(t.isTrue()).toBeTruthy();

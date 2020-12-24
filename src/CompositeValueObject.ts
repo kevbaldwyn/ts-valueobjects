@@ -49,6 +49,18 @@ export class CompositeValueObject<
     return isObjectEqual(this.toNative(), object.toNative() as GenericObject);
   };
 
+  public isNull = (): boolean => {
+    return Object.keys(this.value).reduce(
+      (result: boolean, key: string): boolean => {
+        if (result === false) {
+          return false;
+        }
+        return this.value[key].isNull();
+      },
+      true
+    );
+  };
+
   public toNative = (): GenericObject => {
     return Object.keys(this.value).reduce((result: GenericObject, key) => {
       // eslint-disable-next-line no-param-reassign

@@ -13,6 +13,10 @@ export class IntegerScalar extends ValueObject<BigInt> {
     return this.value === object.value;
   };
 
+  public isNull = (): boolean => {
+    return false;
+  };
+
   public toNative = (): BigInt => {
     return this.value;
   };

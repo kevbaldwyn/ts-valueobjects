@@ -2,6 +2,7 @@ import { StringScalar } from "../Scalars/StringScalar";
 import { CompositeValueObject } from "../CompositeValueObject";
 import { FloatScalar } from "../Scalars/FloatScalar";
 import { getType } from "../ValueObject";
+import { NullScalar } from "../Scalars";
 
 class Comp extends CompositeValueObject<{
   name: StringScalar;
@@ -51,6 +52,47 @@ class ComplexComp extends CompositeValueObject<{
       StringScalar.fromNative(value.name),
       Comp.fromNative(value.composite)
     );
+  }
+}
+
+class CompWithNulls extends CompositeValueObject<{
+  name: StringScalar;
+  null1: NullScalar;
+}> {
+  constructor(name: StringScalar, null1: NullScalar) {
+    super(
+      {
+        name,
+        null1
+      },
+      Comp
+    );
+  }
+
+  public static fromNative(value: { name: string }): CompWithNulls {
+    return new this(
+      StringScalar.fromNative(value.name),
+      NullScalar.fromNative()
+    );
+  }
+}
+
+class CompOnlyNulls extends CompositeValueObject<{
+  null1: NullScalar;
+  null2: NullScalar;
+}> {
+  constructor(null1: NullScalar, null2: NullScalar) {
+    super(
+      {
+        null1,
+        null2
+      },
+      Comp
+    );
+  }
+
+  public static fromNative(): CompOnlyNulls {
+    return new this(NullScalar.fromNative(), NullScalar.fromNative());
   }
 }
 
@@ -136,5 +178,21 @@ describe("Test CompositeValueObject", () => {
       FloatScalar.fromNative(20)
     );
     expect(obj.getName().toNative()).toBe("some name");
+  });
+
+  test("isNull() returns false when 1 or more properties are not null", () => {
+    const wNull = new CompWithNulls(
+      StringScalar.fromNative("some string"),
+      NullScalar.fromNative()
+    );
+    expect(wNull.isNull()).not.toBeTruthy();
+  });
+
+  test("isNull() returns true when all properties are null", () => {
+    const wNull = new CompOnlyNulls(
+      NullScalar.fromNative(),
+      NullScalar.fromNative()
+    );
+    expect(wNull.isNull()).toBeTruthy();
   });
 });

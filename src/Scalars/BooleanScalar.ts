@@ -21,6 +21,10 @@ export class BooleanScalar extends ValueObject<boolean> {
     return this.value === object.value;
   };
 
+  public isNull = (): boolean => {
+    return false;
+  };
+
   public toNative = (): boolean => {
     return this.value;
   };

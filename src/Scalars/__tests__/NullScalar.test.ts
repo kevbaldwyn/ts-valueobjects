@@ -17,4 +17,8 @@ describe("Test Null", () => {
   test("isSame() returns true when given null valueobject", () => {
     expect(testStringClass.isSame(new NullScalar())).toBeTruthy();
   });
+
+  test("isNull() returns true", () => {
+    expect(testStringClass.isNull()).toBeTruthy();
+  });
 });

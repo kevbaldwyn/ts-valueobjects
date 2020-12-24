@@ -13,6 +13,10 @@ export class FloatScalar extends ValueObject<number> {
     return this.value === object.value;
   };
 
+  public isNull = (): boolean => {
+    return false;
+  };
+
   public toNative = (): number => {
     return this.value;
   };

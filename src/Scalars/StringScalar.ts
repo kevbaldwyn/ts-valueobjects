@@ -13,6 +13,10 @@ export class StringScalar extends ValueObject<string> {
     return this.value === object.value;
   };
 
+  public isNull = (): boolean => {
+    return false;
+  };
+
   public toNative = (): string => {
     return this.value;
   };

@@ -27,4 +27,8 @@ describe("Test IntegerScalar", () => {
       testIntegerClass.isSame(new IntegerScalar(differentInteger))
     ).not.toBeTruthy();
   });
+
+  test("isNull() returns false", () => {
+    expect(testIntegerClass.isNull()).not.toBeTruthy();
+  });
 });

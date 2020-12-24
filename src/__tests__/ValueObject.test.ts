@@ -9,6 +9,10 @@ class Stub extends ValueObject<string> {
     return object.value === this.value;
   };
 
+  public isNull = (): boolean => {
+    return false;
+  };
+
   toNative = (): string => {
     return this.value;
   };
@@ -24,6 +28,10 @@ class StubMissingFromNative extends ValueObject<string> {
   }
 
   isSame = (): boolean => {
+    return false;
+  };
+
+  public isNull = (): boolean => {
     return false;
   };
 

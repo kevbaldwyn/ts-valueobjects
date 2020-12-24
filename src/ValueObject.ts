@@ -13,6 +13,7 @@ export interface ValueObjectInterface<V>
     value: V;
   }> {
   isSame(object: ValueObjectInterface<V>): boolean;
+  isNull(): boolean;
   toNative(): Native;
 }
 
@@ -48,6 +49,8 @@ export abstract class ValueObject<V> implements ValueObjectInterface<V> {
   }
 
   abstract isSame(object: ValueObjectInterface<V>): boolean;
+
+  abstract isNull(): boolean;
 
   abstract toNative(): Native;
 }

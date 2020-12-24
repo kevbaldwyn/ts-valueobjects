@@ -13,6 +13,10 @@ export class NullScalar extends ValueObject<null> {
     return object.value === null;
   };
 
+  public isNull = (): boolean => {
+    return true;
+  };
+
   public toNative = (): null => {
     return null;
   };
