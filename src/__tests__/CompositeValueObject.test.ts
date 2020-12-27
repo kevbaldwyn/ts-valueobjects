@@ -80,21 +80,32 @@ class CompWithNulls extends CompositeValueObject<{
 class CompOnlyNulls extends CompositeValueObject<{
   null1: NullScalar;
   null2: NullScalar;
+  null3: NullScalar;
 }> {
-  constructor(null1: NullScalar, null2: NullScalar) {
+  constructor(null1: NullScalar, null2: NullScalar, null3: NullScalar) {
     super(
       {
         null1,
-        null2
+        null2,
+        null3
       },
       Comp
     );
   }
 
   public static fromNative(): CompOnlyNulls {
-    return new this(NullScalar.fromNative(), NullScalar.fromNative());
+    return new this(
+      NullScalar.fromNative(),
+      NullScalar.fromNative(),
+      NullScalar.fromNative()
+    );
   }
 }
+
+beforeEach(() => {
+  jest.resetAllMocks();
+  jest.restoreAllMocks();
+});
 
 describe("Test CompositeValueObject", () => {
   test("should maintain immutability of the properties of .value property", () => {
@@ -190,6 +201,7 @@ describe("Test CompositeValueObject", () => {
 
   test("isNull() returns true when all properties are null", () => {
     const wNull = new CompOnlyNulls(
+      NullScalar.fromNative(),
       NullScalar.fromNative(),
       NullScalar.fromNative()
     );
