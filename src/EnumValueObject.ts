@@ -15,6 +15,10 @@ export class EnumValueObject extends ValueObject<EnumValue> {
     return object.value === this.value;
   };
 
+  public isNull = (): boolean => {
+    return false;
+  };
+
   public toNative = (): EnumValue => {
     return this.value;
   };

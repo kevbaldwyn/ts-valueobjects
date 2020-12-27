@@ -10,7 +10,7 @@ export class NullScalar extends ValueObject<null> {
   }
 
   public isSame = (object: ValueObject<null>): boolean => {
-    return object.value === null;
+    return object.toNative() === null;
   };
 
   public isNull = (): boolean => {
