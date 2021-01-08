@@ -1,4 +1,3 @@
-import { GenericObject } from "../../ValueObject";
 import { ObjectUtils } from "../ObjectUtils";
 
 describe("Test isObjectEqual", () => {

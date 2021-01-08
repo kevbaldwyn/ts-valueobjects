@@ -3,10 +3,6 @@ import { ValueObject, ValueObjectConstructor } from "./ValueObject";
 type EnumValue = string | number;
 
 export class EnumValueObject extends ValueObject<EnumValue> {
-  constructor(value: EnumValue) {
-    super(value, EnumValueObject);
-  }
-
   public static fromNative(value: EnumValue): EnumValueObject {
     return new this(value);
   }

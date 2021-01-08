@@ -6,8 +6,8 @@ export type CompositeProperties = Record<string, ValueObject<unknown>>;
 export class CompositeValueObject<
   T extends CompositeProperties
 > extends ValueObject<T> {
-  constructor(args: T, type: unknown) {
-    super(Object.freeze(args), type);
+  constructor(args: T) {
+    super(Object.freeze(args));
   }
 
   public isSame = (object: ValueObject<CompositeProperties>): boolean => {

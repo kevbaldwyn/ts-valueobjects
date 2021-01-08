@@ -9,13 +9,10 @@ class Comp extends CompositeValueObject<{
   number: FloatScalar;
 }> {
   constructor(name: StringScalar, number: FloatScalar) {
-    super(
-      {
-        name,
-        number
-      },
-      Comp
-    );
+    super({
+      name,
+      number
+    });
   }
 
   public static fromNative(value: { name: string; number: number }): Comp {
@@ -35,13 +32,10 @@ class ComplexComp extends CompositeValueObject<{
   composite: Comp;
 }> {
   constructor(name: StringScalar, composite: Comp) {
-    super(
-      {
-        name,
-        composite
-      },
-      Comp
-    );
+    super({
+      name,
+      composite
+    });
   }
 
   public static fromNative(value: {
@@ -60,13 +54,10 @@ class CompWithNulls extends CompositeValueObject<{
   null1: NullScalar;
 }> {
   constructor(name: StringScalar, null1: NullScalar) {
-    super(
-      {
-        name,
-        null1
-      },
-      Comp
-    );
+    super({
+      name,
+      null1
+    });
   }
 
   public static fromNative(value: { name: string }): CompWithNulls {
@@ -83,14 +74,11 @@ class CompOnlyNulls extends CompositeValueObject<{
   null3: NullScalar;
 }> {
   constructor(null1: NullScalar, null2: NullScalar, null3: NullScalar) {
-    super(
-      {
-        null1,
-        null2,
-        null3
-      },
-      Comp
-    );
+    super({
+      null1,
+      null2,
+      null3
+    });
   }
 
   public static fromNative(): CompOnlyNulls {

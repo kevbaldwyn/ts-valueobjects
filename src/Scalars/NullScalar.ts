@@ -2,7 +2,7 @@ import { ValueObject } from "../ValueObject";
 
 export class NullScalar extends ValueObject<null> {
   constructor() {
-    super(null, NullScalar);
+    super(null);
   }
 
   public static fromNative(): NullScalar {

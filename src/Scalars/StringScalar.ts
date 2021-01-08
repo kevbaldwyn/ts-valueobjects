@@ -1,10 +1,6 @@
 import { ValueObject } from "../ValueObject";
 
 export class StringScalar extends ValueObject<string> {
-  constructor(value: string) {
-    super(value, StringScalar);
-  }
-
   public static fromNative(value: string): StringScalar {
     return new this(value);
   }
