@@ -1,8 +1,20 @@
-# TS Value Objects
-
 ![Build](https://github.com/kevbaldwyn/ts-valueobjects/workflows/Build/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/kevbaldwyn/ts-valueobjects/badge.svg?branch=master)](https://coveralls.io/github/kevbaldwyn/ts-valueobjects?branch=master)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fkevbaldwyn%2Fts-valueobjects%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/kevbaldwyn/ts-valueobjects/master)
+
+- [Core principles](#core-principles)
+  - [Inspiration](#inspiration)
+- [ValueObjectInterface<T>](#valueobjectinterfacet)
+- [Type helper classes](#type-helper-classes)
+  - [StringScalar](#stringscalar)
+  - [FloatScalar](#floatscalar)
+  - [BooleanScalar](#booleanscalar)
+  - [IntegerScalar](#integerscalar)
+  - [NullScalar](#nullscalar)
+  - [Enum Type Helper](#enum-type-helper)
+- [Composite Value Objects](#composite-value-objects)
+- [Domain Value Objects](#domain-value-objects)
+- [Nullable Value Objects](#nullable-value-objects)
 
 ## Core principles
 This package is built around 3 core principles:
@@ -54,8 +66,9 @@ const someCoordinate: ValueObjectInterface<{x:number, y:number}> = {
 ```
 
 ## Type helper classes
-Creating lots of value objects this way can get verbose so you can use some of the included classes for creating common scalar types (`StringScalar`, `FloatScalar`, `IntegerScalar`, `BooleanScalar`, `NullScalar`), and other more complex types such as `EnumValueObject`. 
+Creating lots of value objects this way can get verbose so you can use some of the included classes for creating common scalar types (`StringScalar`, `FloatScalar`, `IntegerScalar`, `BooleanScalar`, `NullScalar`). 
 
+### StringScalar
 ```typescript
 import { StringScalar } from "ts-valueobjects";
 
@@ -71,7 +84,59 @@ const anotherEmailAddress = StringScalar.fromNative('another-email@example.com')
 console.log(anEmailAddress.isSame(anotherEmailAddress)); // false
 ```
 
-## Enum Type Helper
+### FloatScalar
+```typescript
+import { FloatScalar } from "ts-valueobjects";
+
+const floatValue = FloatScalar.fromNative(23.5);
+const floatValue = new FloatScalar(23.5);
+
+floatValue.isNull();
+floatValue.isSame(...);
+floatValue.toNative();
+```
+
+### BooleanScalar
+```typescript
+import { BooleanScalar } from "ts-valueobjects";
+
+const boolValue = BooleanScalar.true();
+const boolValue = BooleanScalar.false();
+const boolValue = BooleanScalar.fromNatiave(true);
+const boolValue = new BooleanScalar(true);
+
+boolValue.isNull();
+boolValue.isSame(...);
+boolValue.toNative();
+boolValue.isTrue();
+boolValue.isFalse();
+```
+
+### IntegerScalar
+```typescript
+import { IntegerScalar } from "ts-valueobjects";
+
+const integerValue = IntegerScalar.fromNative(BigInt(1));
+const integerValue = new IntegerScalar(BigInt(1));
+
+integerValue.isNull();
+integerValue.isSame(...);
+integerValue.toNative();
+```
+
+### NullScalar
+```typescript
+import { NullScalar } from "ts-valueobjects";
+
+const nullValue = NullScalar.fromNative();
+const nullValue = new NullScalar();
+
+integerValue.isNull();
+integerValue.isSame(...);
+integerValue.toNative();
+```
+
+### Enum Type Helper
 Using the helper for cretaing Enums will throw errors when trying to access properties that do not exist:
 ```typescript
 import { Enumerate, EnumValueObject } from "ts-valueobjects";
@@ -92,6 +157,8 @@ const value = Enumerated.fromNative(Enumerated.VAL1); // ok
 The `CompositeValueObject` allows you to create value objects that are more complex and contain any number of other value objects (including nested `CompositeValueObject`s and Domain Objects). 
 
 ```typescript
+import { CompositeValueObject } from "ts-valueobjects";
+
 class User extends CompositeValueObject<{
   name: StringScalar;
   email: StringScalar;
@@ -202,6 +269,8 @@ class EmailAddress extends DomainObjectFrom(
 The abstract `NullableValueObject` class allows wrapping a `null` and a non-`null` implementation into the same interface as a `ValueObjectInterface`. You just have to define 3 static methods: `fromNative()` which does the null / non-null negotiation, and, `nonNullImplementation()` and `nullImplementation()` which return the relevant implementations for the non-null and the null conditions. These methods should each return a `ValueObjectInterface`. By default `NullableValueObject` includes a `nullImplementation()` that returns a `NullScalar`. However this can be overridden and return any `ValueObjectInterface` implementation you like.
 
 ```typescript
+import { NullableValueObject, NullOr, StringScalar } from "ts-valueobjects";
+
 class NullableUserName extends NullableValueObject<string> {
   public static fromNative(value: NullOr<string>): NullableUserName {
     return new this(this.getWhichNullImplementation(value));
