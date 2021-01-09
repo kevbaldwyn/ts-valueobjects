@@ -13,6 +13,7 @@ export interface ValueObjectInterface<V>
     value: V;
   }> {
   isSame(object: ValueObjectInterface<V>): boolean;
+  isNull(): boolean;
   toNative(): Native;
 }
 
@@ -30,26 +31,22 @@ export const hasMember = (
   return Object.keys(obj).filter((method) => method === property).length !== 0;
 };
 
-const enforceFromNative = <O>(
-  obj: ValueObjectInterface<unknown>,
-  c: O
-): void => {
-  if (Object.keys(c).filter((method) => method === "fromNative").length === 0) {
-    throw Error(`${getType(obj)} must include a fromNative method`);
-  }
-};
-
 export abstract class ValueObject<V> implements ValueObjectInterface<V> {
   readonly value: V;
 
-  constructor(value: V, type: unknown) {
+  constructor(value: V) {
     this.value = value;
-    enforceFromNative(this, type);
   }
 
   abstract isSame(object: ValueObjectInterface<V>): boolean;
 
+  abstract isNull(): boolean;
+
   abstract toNative(): Native;
+
+  public static fromNative(value: any): any {
+    throw Error(`Value objects must implement a fromNative method`);
+  }
 }
 
 export function DomainObjectFrom<TBase extends ValueObjectConstructor, V>(

@@ -24,4 +24,8 @@ describe("Test StringScalar", () => {
       testStringClass.isSame(new StringScalar("Not the same"))
     ).not.toBeTruthy();
   });
+
+  test("isNull() returns false", () => {
+    expect(testStringClass.isNull()).not.toBeTruthy();
+  });
 });

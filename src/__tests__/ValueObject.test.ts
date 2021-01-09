@@ -1,12 +1,12 @@
 import { ValueObject, getType, DomainObjectFrom } from "../ValueObject";
 
 class Stub extends ValueObject<string> {
-  constructor(value: string) {
-    super(value, Stub);
-  }
-
   isSame = (object: ValueObject<string>): boolean => {
     return object.value === this.value;
+  };
+
+  public isNull = (): boolean => {
+    return false;
   };
 
   toNative = (): string => {
@@ -19,11 +19,11 @@ class Stub extends ValueObject<string> {
 }
 
 class StubMissingFromNative extends ValueObject<string> {
-  constructor(value: string) {
-    super(value, StubMissingFromNative);
-  }
-
   isSame = (): boolean => {
+    return false;
+  };
+
+  public isNull = (): boolean => {
     return false;
   };
 
@@ -37,10 +37,10 @@ describe("Test ValueObject abstract class()", () => {
     expect(getType(new Stub("jh"))).toBe("Stub");
   });
 
-  test("should throw exception for 'StubMissingFromNative' class that doesn't include fromNative() method", () => {
+  test("fromNative() should throw exception class instantiation with no fromNative method", () => {
     expect(() => {
-      getType(new StubMissingFromNative("jh"));
-    }).toThrow("StubMissingFromNative must include a fromNative method");
+      getType(StubMissingFromNative.fromNative("jh"));
+    }).toThrow("Value objects must implement a fromNative method");
   });
 });
 
@@ -60,7 +60,7 @@ describe("Test DomainObjectFrom() mixin", () => {
     expect(domainInstance.isSame(stubInstance)).toBeTruthy();
   });
 
-  test("should enforce property requirement that defined uniqueness", () => {
+  test("should enforce property requirement that defines uniqueness", () => {
     const domainString = "this string";
     class DomainObject extends DomainObjectFrom(Stub) {}
     const DomainObject2 = DomainObjectFrom(Stub);
@@ -105,6 +105,7 @@ describe("Test DomainObjectFrom() mixin", () => {
     expect(
       testFunc(new DomainObject1(testString), new DomainObject2(testString))
     ).toBeTruthy();
+    expect(new DomainObject1(testString)).not.toBeInstanceOf(DomainObject2);
 
     // compiler should complain about this
     // testFunc(new DomainObject2(testString), new DomainObject1(testString));
@@ -119,6 +120,7 @@ describe("Test DomainObjectFrom() mixin", () => {
     const obj = DomainObject.fromNative("Some String");
 
     expect(getType(obj)).toBe("DomainObject");
+    expect(obj).toBeInstanceOf(DomainObject);
     expect(obj.toNative()).toBe("Some String");
   });
 });

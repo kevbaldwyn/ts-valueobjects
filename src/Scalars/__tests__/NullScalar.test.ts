@@ -15,6 +15,13 @@ describe("Test Null", () => {
   });
 
   test("isSame() returns true when given null valueobject", () => {
-    expect(testStringClass.isSame(new NullScalar())).toBeTruthy();
+    const matched = new NullScalar();
+    const matchSpy = jest.spyOn(matched, "toNative");
+    expect(testStringClass.isSame(matched)).toBeTruthy();
+    expect(matchSpy).toHaveBeenCalled();
+  });
+
+  test("isNull() returns true", () => {
+    expect(testStringClass.isNull()).toBeTruthy();
   });
 });

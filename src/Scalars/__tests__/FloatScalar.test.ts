@@ -25,4 +25,8 @@ describe("Test FloatScalar", () => {
       testFloatClass.isSame(new FloatScalar(differentFloat))
     ).not.toBeTruthy();
   });
+
+  test("isNull() returns false", () => {
+    expect(testFloatClass.isNull()).not.toBeTruthy();
+  });
 });

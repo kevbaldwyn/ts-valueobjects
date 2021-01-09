@@ -39,6 +39,10 @@ describe("Test EnumValueObject", () => {
       testStringClass.isSame(new EnumValueObject(differentString))
     ).not.toBeTruthy();
   });
+
+  test("isNull() returns false", () => {
+    expect(testStringClass.isNull()).not.toBeTruthy();
+  });
 });
 
 describe("test Eunerate() mixin", () => {
