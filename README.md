@@ -102,7 +102,7 @@ class User extends CompositeValueObject<{
       name,
       email,
       isRegistered
-    }, User);
+    });
   }
 
   public static fromNative(value: { name: string; email: string, isRegistered: boolean }): User {
@@ -197,3 +197,48 @@ class EmailAddress extends DomainObjectFrom(
   }
 ) { }
 ```
+
+## Nullable Value Objects
+The abstract `NullableValueObject` class allows wrapping a `null` and a non-`null` implementation into the same interface as a `ValueObjectInterface`. You just have to define 3 static methods: `fromNative()` which does the null / non-null negotiation, and, `nonNullImplementation()` and `nullImplementation()` which return the relevant implementations for the non-null and the null conditions. These methods should each return a `ValueObjectInterface`. By default `NullableValueObject` includes a `nullImplementation()` that returns a `NullScalar`. However this can be overridden and return any `ValueObjectInterface` implementation you like.
+
+```typescript
+class NullableUserName extends NullableValueObject<string> {
+  public static fromNative(value: NullOr<string>): NullableUserName {
+    return new this(this.getWhichNullImplementation(value));
+  }
+
+  public static nonNullImplementation(value: string): StringScalar {
+    return new StringScalar("fixed string");
+  }
+}
+
+const nullVersion = NullableUserName.fromNative(null);
+console.log(nullVersion.isNull()) // -> true
+
+const nonNullVersion = NullableUserName.fromNative("John Doe");
+console.log(nonNullVersion.isNull()) // -> false
+
+console.log(nonNullVersion.isSame(nullVersion)) // -> false
+```
+
+Optionally override the default `nullImplementation()`:
+```typescript
+class NullImplementationValueObject extends ValueObject<null> {
+  ...
+}
+
+class NullableUserName extends NullableValueObject<string> {
+  public static fromNative(value: NullOr<string>): NullableUserName {
+    return new this(this.getWhichNullImplementation(value));
+  }
+
+  public static nullImplementation(): StringScalar {
+    return new NullImplementationValueObject();
+  }
+
+  public static nonNullImplementation(value: string): StringScalar {
+    return new StringScalar("fixed string");
+  }
+}
+```
+  
