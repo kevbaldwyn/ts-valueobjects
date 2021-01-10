@@ -36,6 +36,9 @@ export abstract class ValueObject<V> implements ValueObjectInterface<V> {
 
   constructor(value: V) {
     this.value = value;
+    if (typeof this.value === "object") {
+      Object.freeze(this.value);
+    }
   }
 
   abstract isSame(object: ValueObjectInterface<V>): boolean;
